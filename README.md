@@ -3,7 +3,7 @@
 
 - 🌱 I’m currently learning **Python, R, C++, Machine Learning & Statistics**
 
-- 📝 I often write [here](https://www.kenwuyang.com/en/post) as an effort to keep learning, one post at a time
+- 📝 I often write [here](https://www.kenwuyang.com/posts) as an effort to keep learning, one post at a time
 
 - 📫 You could reach me at **wu12(at)uchicago(dot)edu**
 
