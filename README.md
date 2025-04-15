@@ -1,7 +1,7 @@
 <h1 align="center">👋 I'm Yang</h1>
 <h3 align="center">A statistics student living in the USA</h3>
 
-- 🌱 Still learning, still curious about anything **Python, R, C++, Machine Learning & Statistics**
+- 🌱 Learning and curious about anything **Python, R, C++, Machine Learning & Statistics**
 
 - 📝 Writing [here](https://www.kenwuyang.com/posts) to keep learning, one post at a time
 
