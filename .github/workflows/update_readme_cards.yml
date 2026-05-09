@@ -1,0 +1,69 @@
+name: Update README cards
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at 08:37 weekly on Monday
+    - cron: "37 8 * * 1"
+  push:
+    paths:
+      - README.md
+      - .github/workflows/update_readme_cards.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme-cards:
+    name: Generate and commit README cards
+    if: ${{ github.repository == 'yangwu1227/yangwu1227' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        id: checkout-repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Prepare output directory
+        id: prepare-output-directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p profile
+
+      - name: Generate top languages card
+        id: generate-top-languages-card
+        # From the market: https://github.com/marketplace/actions/github-readme-stats-action
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: top-langs
+          options: "username=yangwu1227&layout=compact&theme=tokyonight&title_color=d17a00&text_color=d17a00&locale=en&langs_count=8&hide=html,scss,css,tex,makefile,jupyter%20notebook"
+          path: profile/top_langs.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit generated card
+        id: commit-generated-card
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add profile/top_langs.svg
+
+          if git diff --staged --quiet; then
+            echo "No README card changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update README Top Languages card"
+          git push
